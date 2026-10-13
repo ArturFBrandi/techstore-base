@@ -30,3 +30,9 @@ Retorna os clientes cadastrados.
 | `nome` | string | Nome completo |
 | `email` | string | E-mail |
 | `pedidosAnteriores` | number | Quantidade de pedidos já feitos na loja |
+
+## Pedidos de aviso de reposição
+
+O projeto não possui endpoint de gravação para pedidos de aviso. Esses pedidos são
+salvos no `localStorage` do navegador e ficam visíveis na área interna apenas no
+mesmo navegador e perfil.

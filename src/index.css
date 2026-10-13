@@ -573,6 +573,43 @@ h2 {
   color: var(--cor-frete);
 }
 
+.detalhe-esgotado {
+  color: var(--cor-erro);
+}
+
+.form-aviso-estoque {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  max-width: 28rem;
+  padding: var(--espaco-4);
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+}
+
+.form-aviso-estoque h2,
+.form-aviso-estoque p {
+  margin: 0;
+}
+
+.form-aviso-estoque p {
+  color: var(--cor-texto-suave);
+}
+
+.form-aviso-estoque input {
+  width: 100%;
+  padding: var(--espaco-3);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-pequeno);
+  background: var(--cor-fundo);
+}
+
+.mensagem-aviso-estoque {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 .detalhe-garantias {
   list-style: none;
   margin: 0;
@@ -821,6 +858,19 @@ h2 {
 
 .tabela tbody tr:last-child td {
   border-bottom: none;
+}
+
+.lista-interessados {
+  list-style: none;
+  display: grid;
+  gap: var(--espaco-2);
+  margin: 0;
+  padding: 0;
+  white-space: normal;
+}
+
+.lista-interessados a {
+  color: var(--cor-foco);
 }
 
 /* Rodapé */

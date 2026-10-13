@@ -10,6 +10,7 @@ import Estoque from './pages/Estoque'
 import { buscarProdutos } from './services/produtos'
 import { buscarClientes } from './services/clientes'
 import { obterPrecoNumerico } from './utils/preco'
+import { carregarInteressados, salvarInteressados } from './utils/interessados'
 
 export default function App() {
   const [produtos, setProdutos] = useState([])
@@ -18,8 +19,19 @@ export default function App() {
   const [carrinho, setCarrinho] = useState([])
   const [clientes, setClientes] = useState([])
   const [clienteAtualId, setClienteAtualId] = useState(null)
+  const [interessados, setInteressados] = useState([])
+  const [carregandoInteressados, setCarregandoInteressados] = useState(true)
+  const [erroInteressados, setErroInteressados] = useState('')
 
   useEffect(() => {
+    try {
+      setInteressados(carregarInteressados())
+    } catch (erro) {
+      setErroInteressados(erro.message)
+    } finally {
+      setCarregandoInteressados(false)
+    }
+
     buscarProdutos()
       .then((dados) => setProdutos(dados))
       .catch(() => setErro('Não foi possível carregar os produtos.'))
@@ -34,6 +46,40 @@ export default function App() {
   function adicionarAoCarrinho(produto) {
     if (obterPrecoNumerico(produto.price) === null) return
     setCarrinho(carrinho.concat(produto))
+  }
+
+  function registrarInteresse(produtoId, dados) {
+    const nome = dados.nome.trim()
+    const email = dados.email.trim()
+
+    if (!nome || !email) {
+      return { sucesso: false, mensagem: 'Informe seu nome e um e-mail válido.' }
+    }
+
+    const emailNormalizado = email.toLocaleLowerCase()
+    const duplicado = interessados.some(
+      (item) =>
+        item.produtoId === produtoId && item.email.toLocaleLowerCase() === emailNormalizado
+    )
+
+    if (duplicado) {
+      return {
+        sucesso: false,
+        mensagem: 'Este e-mail já está cadastrado para receber aviso deste produto.',
+      }
+    }
+
+    const atualizados = interessados.concat({ produtoId, nome, email })
+
+    try {
+      salvarInteressados(atualizados)
+      setInteressados(atualizados)
+      setErroInteressados('')
+      return { sucesso: true, mensagem: 'Pronto! Avisaremos quando o produto voltar.' }
+    } catch (erro) {
+      setErroInteressados(erro.message)
+      return { sucesso: false, mensagem: erro.message }
+    }
   }
 
   function removerUmaUnidade(produtoId) {
@@ -60,6 +106,11 @@ export default function App() {
       <main className="conteudo">
         {carregando && <p className="aviso">Carregando produtos...</p>}
         {erro && <p className="aviso aviso-erro">{erro}</p>}
+        {erroInteressados && (
+          <p className="aviso aviso-erro" role="alert">
+            {erroInteressados}
+          </p>
+        )}
 
         {!carregando && !erro && (
           <Routes>
@@ -69,7 +120,16 @@ export default function App() {
             />
             <Route
               path="/produto/:id"
-              element={<PaginaProduto produtos={produtos} onAdicionar={adicionarAoCarrinho} />}
+              element={
+                <PaginaProduto
+                  produtos={produtos}
+                  onAdicionar={adicionarAoCarrinho}
+                  interessados={interessados}
+                  onRegistrarInteresse={registrarInteresse}
+                  carregandoInteressados={carregandoInteressados}
+                  erroInteressados={erroInteressados}
+                />
+              }
             />
             <Route
               path="/carrinho"
@@ -83,7 +143,10 @@ export default function App() {
                 />
               }
             />
-            <Route path="/estoque" element={<Estoque produtos={produtos} />} />
+            <Route
+              path="/estoque"
+              element={<Estoque produtos={produtos} interessados={interessados} />}
+            />
           </Routes>
         )}
       </main>
