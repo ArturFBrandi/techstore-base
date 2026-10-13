@@ -31,3 +31,10 @@
 * Permite remover unidades.
 * Permite aplicar cupons de desconto.
 * Exibe o total da compra.
+
+## Painel do lojista
+
+* A página do painel fica acessível pelo menu e mantém a visão de estoque e de pedidos de aviso de reposição.
+* Exibe, por categoria, as unidades disponíveis e o faturamento bruto potencial ao vender todo o estoque pelo preço atual.
+* Exibe produtos e unidades em estoque que aguardam definição de preço; eles não entram no faturamento potencial.
+* Exibe quantos e-mails únicos aguardam reposição de produtos atualmente esgotados.

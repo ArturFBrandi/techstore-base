@@ -17,3 +17,9 @@ O cupom não diferencia letras maiúsculas e minúsculas.
 ## Promoções
 
 Produtos em promoção exibem o preço original riscado ao lado do preço atual.
+
+## Painel do lojista
+
+O faturamento potencial por categoria é calculado multiplicando o estoque disponível
+pelo preço atual de venda. É uma projeção bruta da venda de todo o estoque, não um
+cálculo de lucro líquido, e produtos sem preço definido ficam fora da soma.

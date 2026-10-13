@@ -872,6 +872,39 @@ h2 {
 
 /* Estoque */
 
+.painel-indicadores {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--espaco-4);
+  margin: var(--espaco-5) 0;
+}
+
+.painel-indicador {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  padding: var(--espaco-5);
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+}
+
+.painel-indicador-rotulo {
+  color: var(--cor-texto-suave);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.painel-indicador strong {
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.painel-indicador > span:last-child {
+  color: var(--cor-texto-suave);
+  font-size: 0.8rem;
+}
+
 .tabela-moldura {
   overflow-x: auto;
   background: var(--cor-superficie);

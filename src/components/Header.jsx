@@ -14,8 +14,8 @@ export default function Header({ quantidadeCarrinho, animacaoCarrinho, clienteAt
           <NavLink to="/" end className="nav-link">
             Loja
           </NavLink>
-          <NavLink to="/estoque" className="nav-link nav-link-interna">
-            Área interna
+          <NavLink to="/painel" className="nav-link nav-link-interna">
+            Painel do lojista
           </NavLink>
         </nav>
 
