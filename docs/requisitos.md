@@ -16,7 +16,7 @@
 
 ## Produtos sem preço
 
-* Produtos sem preço definido não podem ser vendidos.
+* Produtos sem preço definido exibem que o preço está indisponível e não podem ser adicionados ao carrinho.
 
 ## Página do produto
 

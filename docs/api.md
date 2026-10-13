@@ -12,7 +12,7 @@ Retorna a lista de produtos do catálogo.
 |---|---|---|
 | `id` | string | Identificador do produto |
 | `title` | string | Nome do produto |
-| `price` | number | Preço atual, sempre numérico |
+| `price` | number \| null (opcional) | Preço atual. Pode estar ausente ou nulo enquanto não for definido; nesse caso o produto não pode ser vendido |
 | `precoOriginal` | number | Preço antes da promoção. Presente só nos produtos em promoção |
 | `category` | string | `roupas`, `eletronicos`, `acessorios` ou `casa` |
 | `description` | string | Descrição do produto |

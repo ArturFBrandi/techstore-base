@@ -4,6 +4,7 @@ import SugestaoItem from '../components/SugestaoItem'
 import { agruparItens, calcularTotal } from '../utils/carrinho'
 import { validarCupom } from '../utils/cupons'
 import { formatarPreco } from '../utils/formatarPreco'
+import { obterPrecoNumerico } from '../utils/preco'
 
 export default function Carrinho({ carrinho, produtos, clienteAtual, onAdicionar, onRemover }) {
   const [codigoCupom, setCodigoCupom] = useState('')
@@ -12,7 +13,8 @@ export default function Carrinho({ carrinho, produtos, clienteAtual, onAdicionar
 
   const itens = agruparItens(carrinho)
   const total = calcularTotal(carrinho)
-  const totalComDesconto = cupomAplicado ? total * (1 - cupomAplicado.desconto) : total
+  const totalComDesconto =
+    total === null ? null : cupomAplicado ? total * (1 - cupomAplicado.desconto) : total
 
   const sugestoes = produtos
     .filter((produto) => !carrinho.find((item) => item.id === produto.id))
@@ -51,21 +53,27 @@ export default function Carrinho({ carrinho, produtos, clienteAtual, onAdicionar
 
       <div className="carrinho-layout">
         <ul className="lista-carrinho">
-          {itens.map((item) => (
-            <li key={item.produto.id} className="item-carrinho">
-              <div className="item-imagem-moldura">
-                <img src={item.produto.image} alt={item.produto.title} />
-              </div>
-              <div className="item-info">
-                <p className="item-titulo">{item.produto.title}</p>
-                <p className="item-preco">R$ {item.produto.price}</p>
-              </div>
-              <span className="item-quantidade">{item.quantidade} un.</span>
-              <button className="botao-texto" onClick={() => onRemover(item.produto.id)}>
-                Remover 1
-              </button>
-            </li>
-          ))}
+          {itens.map((item) => {
+            const preco = obterPrecoNumerico(item.produto.price)
+
+            return (
+              <li key={item.produto.id} className="item-carrinho">
+                <div className="item-imagem-moldura">
+                  <img src={item.produto.image} alt={item.produto.title} />
+                </div>
+                <div className="item-info">
+                  <p className="item-titulo">{item.produto.title}</p>
+                  <p className="item-preco">
+                    {preco === null ? 'Preço indisponível' : formatarPreco(preco)}
+                  </p>
+                </div>
+                <span className="item-quantidade">{item.quantidade} un.</span>
+                <button className="botao-texto" onClick={() => onRemover(item.produto.id)}>
+                  Remover 1
+                </button>
+              </li>
+            )
+          })}
         </ul>
 
         <aside className="resumo">
@@ -95,7 +103,11 @@ export default function Carrinho({ carrinho, produtos, clienteAtual, onAdicionar
           )}
           <p className="total">
             <span>Total</span>
-            <span>{formatarPreco(totalComDesconto)}</span>
+            <span>
+              {totalComDesconto === null
+                ? 'Indisponível'
+                : formatarPreco(totalComDesconto)}
+            </span>
           </p>
         </aside>
       </div>

@@ -9,6 +9,7 @@ import Carrinho from './pages/Carrinho'
 import Estoque from './pages/Estoque'
 import { buscarProdutos } from './services/produtos'
 import { buscarClientes } from './services/clientes'
+import { obterPrecoNumerico } from './utils/preco'
 
 export default function App() {
   const [produtos, setProdutos] = useState([])
@@ -31,6 +32,7 @@ export default function App() {
   }, [])
 
   function adicionarAoCarrinho(produto) {
+    if (obterPrecoNumerico(produto.price) === null) return
     setCarrinho(carrinho.concat(produto))
   }
 
