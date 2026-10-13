@@ -218,6 +218,7 @@ h2 {
 }
 
 .mini-carrinho {
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--espaco-2);
@@ -228,8 +229,53 @@ h2 {
   font-size: 0.9rem;
 }
 
+.mini-carrinho-contagem {
+  position: absolute;
+  top: -0.55rem;
+  right: -0.55rem;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  display: grid;
+  place-items: center;
+  padding: 0 0.25rem;
+  border-radius: 999px;
+  background: var(--cor-destaque);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.mini-carrinho:focus-visible {
+  outline-offset: 4px;
+}
+
 .mini-carrinho:hover {
   border-color: var(--cor-texto);
+}
+
+.mini-carrinho-animando {
+  animation: carrinho-pulso 450ms ease-out;
+}
+
+@keyframes carrinho-pulso {
+  0% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(1.12);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mini-carrinho-animando {
+    animation: none;
+  }
 }
 
 .mini-carrinho-icone {

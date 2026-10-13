@@ -22,6 +22,7 @@ export default function App() {
   const [interessados, setInteressados] = useState([])
   const [carregandoInteressados, setCarregandoInteressados] = useState(true)
   const [erroInteressados, setErroInteressados] = useState('')
+  const [animacaoCarrinho, setAnimacaoCarrinho] = useState(0)
 
   useEffect(() => {
     try {
@@ -45,7 +46,8 @@ export default function App() {
 
   function adicionarAoCarrinho(produto) {
     if (obterPrecoNumerico(produto.price) === null) return
-    setCarrinho(carrinho.concat(produto))
+    setCarrinho((itens) => itens.concat(produto))
+    setAnimacaoCarrinho((versao) => versao + 1)
   }
 
   function registrarInteresse(produtoId, dados) {
@@ -101,7 +103,11 @@ export default function App() {
   return (
     <div className="app">
       <RolarParaTopo />
-      <Header carrinho={carrinho} clienteAtual={clienteAtual} />
+      <Header
+        quantidadeCarrinho={carrinho.length}
+        animacaoCarrinho={animacaoCarrinho}
+        clienteAtual={clienteAtual}
+      />
 
       <main className="conteudo">
         {carregando && <p className="aviso">Carregando produtos...</p>}
